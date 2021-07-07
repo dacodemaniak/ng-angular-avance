@@ -1,0 +1,60 @@
+<h2>Gestion des utilisateurs</h2>
+
+<ng-container *ngIf="form.controls">
+  <app-user-form [form]="form" (newUser)="addUser($event)"></app-user-form>
+</ng-container>
+
+<ng-container *ngIf="users.length">
+  <table>
+    <thead>
+      <tr>
+        <th [appSort]="users" data-order="desc" data-name="id" scope="col">#</th>
+        <th [appSort]="users" data-order="desc" data-name="username" scope="col">Nom d'utilisateur</th>
+        <th [appSort]="users" data-order="desc" data-name="email" scope="col">Email</th>
+        <th scope="col">Mot de passe</th>
+        <th [appSort]="users" data-order="desc" data-name="createdAt" data-type="date" scope="col">Création</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>
+          {{ user.getId() }}
+        </td>
+        <td>
+          {{ user.getUsername()}}
+        </td>
+        <td>
+          {{ user.getEmail() }}
+        </td>
+        <td>
+          {{ user.getPassword() | scramble: {wildCard: 'x'} }}
+        </td>
+        <td>
+          {{ user.getCreatedAt() | timeAgo | async }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>
+
+<h2>Les employés du mois</h2>
+<button
+  type="button"
+  [appSort]="employees"
+  data-name="lastName"
+  data-order="desc"
+>Tri par nom</button>
+<button
+  type="button"
+    [appSort]="employees"
+  data-name="birthDate"
+  data-order="desc"
+  data-type="date"
+>Tri par date de naissance</button>
+
+<ol>
+  <li *ngFor="let employee of employees">
+    {{ employee.lastName }} {{ employee.firstName }} {{ employee.birthDate | date: 'd-m-Y'}}
+  </li>
+</ol>

@@ -1,0 +1,20 @@
+<header>
+  <h1>{{ title }}</h1>
+</header>
+
+<nav>
+  <ul>
+    <li>
+      <a [routerLink]="['user', 'admin']">Gestion des utilisateurs</a>
+    </li>
+  </ul>
+</nav>
+
+<!-- Ici, charger les composants définis par les routes -->
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer>
+  V. 1.0.0
+</footer>
