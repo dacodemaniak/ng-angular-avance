@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { UserGuard } from '../core/guards/user.guard';
+import { LoginGuard } from '../core/guards/login.guard';
+import { UserDetailComponent } from './components/user-detail/user-detail.component';
+import { UserResolver } from '../core/resolvers/user-resolver';
 
 const routes: Routes = [
   {
@@ -12,7 +15,15 @@ const routes: Routes = [
   },
   {
     path:'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [LoginGuard]
+  },
+  {
+    path: 'detail/:id',
+    component: UserDetailComponent,
+    resolve: {
+      user: UserResolver
+    }
   },
   {
     path: 'admin',

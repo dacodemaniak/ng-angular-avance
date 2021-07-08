@@ -6,13 +6,15 @@ import { UserRoutingModule } from './user-routing.module';
 import { AdminComponent } from './admin/admin.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { LoginComponent } from './components/login/login.component';
+import { UserDetailComponent } from './components/user-detail/user-detail.component';
 
 
 @NgModule({
   declarations: [
     AdminComponent,
     UserFormComponent,
-    LoginComponent
+    LoginComponent,
+    UserDetailComponent
   ],
   imports: [
     CommonModule,

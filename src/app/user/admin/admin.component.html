@@ -22,7 +22,9 @@
           {{ user.getId() }}
         </td>
         <td>
-          {{ user.getUsername()}}
+          <a [routerLink]="['..', 'detail', user.getId()]">
+            {{ user.getUsername()}}
+          </a>
         </td>
         <td>
           {{ user.getEmail() }}
