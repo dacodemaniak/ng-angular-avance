@@ -1,6 +1,8 @@
 import { AdminComponent } from './admin/admin.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './components/login/login.component';
+import { UserGuard } from '../core/guards/user.guard';
 
 const routes: Routes = [
   {
@@ -9,8 +11,13 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path:'login',
+    component: LoginComponent
+  },
+  {
     path: 'admin',
-    component: AdminComponent
+    component: AdminComponent,
+    canActivate: [UserGuard]
   },
   {
     path: '**',

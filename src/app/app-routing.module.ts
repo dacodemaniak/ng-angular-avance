@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UserGuard } from './core/guards/user.guard';
 import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
@@ -15,7 +16,7 @@ const routes: Routes = [
   {
     path: 'user',
     loadChildren: () => import('./user/user.module')
-      .then((module) => module.UserModule)
+      .then((module) => module.UserModule),
   },
   {
     path: '**',

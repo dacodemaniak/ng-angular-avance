@@ -1,6 +1,6 @@
 import { UserModel } from './../models/user-model';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, take } from 'rxjs/operators';
 
@@ -53,5 +53,29 @@ export class UserService {
         return results.map((result: any) => new UserModel().hydrate(result));
       })
     );
+  }
+
+  public login(credentials: any): Observable<HttpResponse<any>> {
+    return this.httpClient.get<HttpResponse<any>>(
+      'http://localhost:4200/api/v1/signin/' + encodeURIComponent(credentials.login) + '/' + encodeURIComponent(credentials.password),
+      {
+        observe: 'response'
+      }
+    );
+  }
+
+  public hasUser(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const session: any = sessionStorage.getItem('user');
+      if (session !== null) {
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+    });
+  }
+
+  public storeUserSession(id: number): void {
+    sessionStorage.setItem('user', id.toString());
   }
 }

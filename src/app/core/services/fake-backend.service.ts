@@ -9,6 +9,7 @@ import {
 } from 'rxjs/operators';
 
 import {
+  notFound,
   ok
 } from './../../_helpers/http-helpers';
 
@@ -70,8 +71,21 @@ const routeMatchers: Map<string, {path: RegExp, method: string, action: any}> = 
     {
       path: /\/api\/v1\/signin\/\w+\/\w+$/,
       method: 'GET',
-      action: () => {
-        return ok({message: 'GET on user_signin route was intercepted'})
+      action: (body: any, ...args: any[]) => {
+        const url: string = args[0];
+        const urlParts: string[] = url.split('/');
+        const login: string = urlParts[urlParts.length - 2];
+        const password: string = urlParts[urlParts.length - 1];
+
+        console.log(`login : ${login} password : ${password}`);
+        const index: number = users.findIndex((user: any) => {
+          return user.username === login && user.password === password
+        });
+
+        if (index !== -1) {
+          return ok({message: users[index].id});
+        }
+        return notFound({message: 'Aucun utilisateur trouvé'});
       }
     }
   )
@@ -92,7 +106,7 @@ class FakeBackendService implements HttpInterceptor {
       const routes: {path: RegExp, method: string, action: any}[] = [...routeMatchers.values()];
       for (const route of routes) {
         if (route.path.test(url) && route.method === method) {
-          return route.action(body);
+          return route.action(body, url);
         }
       }
       return next.handle(request);

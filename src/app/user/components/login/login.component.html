@@ -1,0 +1,19 @@
+<form [formGroup]="form" (ngSubmit)="doLogin()">
+    <mat-form-field>
+        <input matInput formControlName="login" placeholder="Votre login...">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Votre mot de passe...">
+        <button mat-icon-button (click)="showPassword = !showPassword">
+            <mat-icon *ngIf="showPassword">
+                visibility_off
+            </mat-icon>
+            <mat-icon *ngIf="!showPassword">
+                visibility
+            </mat-icon>
+        </button>
+    </mat-form-field>
+    <button mat-button color="primary" [disabled]="form.invalid">
+        Login
+    </button>
+</form>

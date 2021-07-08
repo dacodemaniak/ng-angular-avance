@@ -5,12 +5,14 @@ import { CommonModule } from '@angular/common';
 import { UserRoutingModule } from './user-routing.module';
 import { AdminComponent } from './admin/admin.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 @NgModule({
   declarations: [
     AdminComponent,
-    UserFormComponent
+    UserFormComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,

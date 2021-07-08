@@ -12,9 +12,9 @@ export const ok = (body: any): Observable<HttpResponse<any>> => {
   )
 }
 
-export const notFound = (): Observable<HttpResponse<any>> => {
+export const notFound = (body: any): Observable<HttpResponse<any>> => {
   return of(
-    new HttpResponse({status: 409})
+    new HttpResponse({status: 404, body})
   )
 }
 
