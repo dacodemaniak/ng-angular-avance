@@ -78,4 +78,10 @@ export class UserService {
   public storeUserSession(id: number): void {
     sessionStorage.setItem('user', id.toString());
   }
+
+  public findOne(id: number): Observable<UserModel> {
+    return this.httpClient.get<UserModel>(
+      `http://localhost:4200/api/v1/byid/${id}`
+    );
+  }
 }

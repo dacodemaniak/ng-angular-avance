@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { UserModel } from 'src/app/core/models/user-model';
 
 @Component({
   selector: 'app-user-detail',
@@ -6,11 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-detail.component.scss']
 })
 export class UserDetailComponent implements OnInit {
+  public user!: UserModel;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    console.log(`onInit from UserDetailComponent`);
+    this.route.data
+      .subscribe((data: any) => {
+        console.log(`Got ${JSON.stringify(data.user)}`);
+        this.user = data.user;
+      })
   }
 
 }

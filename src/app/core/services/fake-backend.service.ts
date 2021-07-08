@@ -7,6 +7,7 @@ import {
   dematerialize,
   delay
 } from 'rxjs/operators';
+import { UserModel } from '../models/user-model';
 
 import {
   notFound,
@@ -49,10 +50,23 @@ const routeMatchers: Map<string, {path: RegExp, method: string, action: any}> = 
   .set(
     'user_byid',
     {
-      path: /\api\/v1\/user\/\d+$/,
+      path: /\api\/v1\/byid\/\d+$/,
       method: 'GET',
-      action: () => {
-        return ok({message: 'GET on api/v1/user was intercepted'})
+      action: (body: any, ...args: any[]) => {
+        const urlParts: string[] = args[0].split('/');
+        const rawId: any = urlParts.pop();
+        let id: number = 0;
+        if (!isNaN(rawId)) {
+          id = rawId;
+        }
+        console.log(`Try to find user with id#${id}`);
+        const rawUser: any = users.find((user: any) => user.id == id);
+        if (rawUser === undefined) {
+          throw new Error('404');
+          return notFound({message: `No user were found with ${id}`});
+        }
+        console.log(JSON.stringify(rawUser));
+        return ok(new UserModel().hydrate(rawUser));
       }
     }
   )
@@ -105,6 +119,7 @@ class FakeBackendService implements HttpInterceptor {
     const handleRoute = (): Observable<HttpEvent<any>> => {
       const routes: {path: RegExp, method: string, action: any}[] = [...routeMatchers.values()];
       for (const route of routes) {
+        console.log(`Testing : ${route.path}`);
         if (route.path.test(url) && route.method === method) {
           return route.action(body, url);
         }

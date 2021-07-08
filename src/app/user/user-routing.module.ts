@@ -21,6 +21,7 @@ const routes: Routes = [
   {
     path: 'detail/:id',
     component: UserDetailComponent,
+    canActivate: [LoginGuard],
     resolve: {
       user: UserResolver
     }
